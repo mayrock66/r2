@@ -1,0 +1,49 @@
+$ Example 7,Drift Diffusion Transport Model
+$ -------------------------------------------------
+$ Ids vs. Vds, @Vgs=Vdd=0.6V
+$ Tsi=1.5nm, Lg=10nm
+
+$**************************************************
+$ Takes about 7 minutes to run
+$**************************************************
+
+$ DEVICE DIRECTIVE
+device  nsd=1e20, nbody=0, lgtop=10, lgbot=10, lsd=7.5,
++	overlap_s=0, overlap_d=0,
++       dopslope_s=0, dopslope_d=0,
++       tsi=1.5, tox_top=1.5, tox_bot=1.5, temp=300
+
+$ GRID DIRECTIVE
+
+grid    dx=0.3 dy=0.15 refine=1
+
+$ TRANSPORT DIRECTIVE
+
+transport model=dd, mu_low=200, beta=2, vsat=1e7
++	ELE_TAUW=1e-13, ELE_CQ=1
+
+$ BIAS DIRECTIVE
+
+bias vgtop=0.6, vgbot=0.6, vs=0.0, vd=0.0, vgstep=0, vdstep=0.05,
++    ngstep=0, ndstep=12, vd_initial=0.0
+
+$ MATERIAL DIRECTIVE
+
+material wfunc_top=4.25, wfunc_bot=4.25, mlong=0.91, mtran=0.19, kox_top=3.9,
++        kox_bot=3.9, dec_top=3.34, dec_bot=3.34, ksi=11.7
+
+$ SOLUTION DIRECTIVE
+
+solve dvmax=0.001, dvpois=1e-6
+
+$ OPTIONS DIRECTIVE
+
+options valleys=unprimed, num_subbands=1, dg=true, fermi=true, 
++       ox_penetrate=false
+
+$ PLOTTING CAPABILITES
+
+plots I_V=y, Ec3d=y, Ne3d=y, Ec_sub=y, Ne_sub=y, Te=n, 
++	Ec_IV=y, Ne_IV=y
+
+end
